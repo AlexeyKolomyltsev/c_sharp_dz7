@@ -13,17 +13,28 @@ void PrintArray(int[,] arrayforprint)   ///метод печати массив�
     Console.WriteLine();
 }
 
-int[,] ReplaceRowColumn(int[,] array)  ///метод замены
+void ReplaceRowColumn(int[,] array)  ///метод замены
 {
-    int[,] arr_new = new int[array.GetLength(0), array.GetLength(1)];
-    for (int i = 0; i < array.GetLength(0); i++)
+    if (array.GetLength(0) == array.GetLength(1))
     {
-        for (int j = 0; j < array.GetLength(1); j++)
+        for (int i = 0; i < array.GetLength(0); i++)
         {
-            arr_new[i, j] = array[j, i];
+            for (int j = 0; j < array.GetLength(1); j++)
+            {
+                if (j > i)
+                {
+                    int tmp = array[i, j];
+                    array[i, j] = array[j, i];
+                    array[j, i] = tmp;
+                }
+            }
         }
     }
-    return arr_new;
+    else
+        {
+            Console.WriteLine("Матрица не квадратная");
+            Console.WriteLine();
+        }
 }
 
 Console.Write("Введите количество строк = ");
@@ -35,11 +46,8 @@ int[,] array = new int[n, m];
 for (int i = 0; i < array.GetLength(0); i++)
     for (int j = 0; j < array.GetLength(1); j++) array[i, j] = new Random().Next(1, 10);
 
-if (n!=m) Console.WriteLine("Матрица не квадратная");
-else
-{
-    int[,] arrR = ReplaceRowColumn(array);
-    PrintArray(arrR);
-}
+PrintArray(array);
+
+ReplaceRowColumn(array);
 PrintArray(array);
 
